@@ -8,5 +8,26 @@ namespace blogit.dal
 {
     public class Class1
     {
+       //s hbhgjhh
+    }
+    public class Class2
+    {
+        //s hbhgjhh
+    }
+    public class Class3
+    {
+        //s hbhgjhh
+    }
+    public class Class4
+    {
+        //s hbhgjhh
+    }
+    public class Class5
+    {
+        //s hbhgjhh
+    }
+    public class Class41
+    {
+        //s hbhgjhh
     }
 }
