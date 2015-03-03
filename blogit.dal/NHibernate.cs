@@ -6,13 +6,14 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
+using blogit.;
+
 
 namespace blogit.dal
 {
     public class NHibernate
     {
-        public class NHibernateHelper
-        {
+    
             private static ISessionFactory _sessionFactory;
 
             private static ISessionFactory SessionFactory
@@ -31,12 +32,12 @@ namespace blogit.dal
                 _sessionFactory = Fluently.Configure()
                     .Database(MsSqlConfiguration.MsSql2008
                                   .ConnectionString(
-                                      @"Server=.;initial catalog=TestDB2;integrated security=True")
+                                      @"Server=.;initial catalog=blogit;integrated security=True")
                                   .ShowSql()
                     )
                     .Mappings(m =>
                               m.FluentMappings
-                                  .AddFromAssemblyOf<Program>())
+                                  .AddFromAssemblyOf<blogit.dal.DataModification>())
                     .ExposeConfiguration(cfg => new SchemaExport(cfg)
                                                     .Create(true, true))
                     .BuildSessionFactory();
@@ -46,6 +47,6 @@ namespace blogit.dal
             {
                 return SessionFactory.OpenSession();
             }
-        }
+        
     }
 }
