@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../../typings/references.d.ts" />
+
 module app.admin.services {
     'use strict';
 

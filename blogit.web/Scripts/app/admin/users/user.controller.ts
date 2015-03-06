@@ -1,4 +1,5 @@
-﻿module app.admin.users {
+﻿/// <reference path="../../../typings/references.d.ts" />
+module app.admin.users {
     'use strict';
 
     export interface IUserController {
