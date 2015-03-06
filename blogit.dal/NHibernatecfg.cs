@@ -7,7 +7,7 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using blogit.dal.Entities;
-using blogit.web;
+
 
 namespace blogit.dal
 {
@@ -36,7 +36,7 @@ namespace blogit.dal
                     )
                     .Mappings(m =>
                               m.FluentMappings
-                                  .AddFromAssemblyOf<blogit.web.Controllers.BuildDBController>())
+                                  .AddFromAssemblyOf<CreateDB>())
                     .ExposeConfiguration(cfg => new SchemaExport(cfg)
                                                     .Create(true, true))
                     .BuildSessionFactory();
