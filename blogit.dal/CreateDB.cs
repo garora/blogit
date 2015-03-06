@@ -7,7 +7,7 @@ using blogit.dal.Entities;
 
 namespace blogit.dal
 {
-    class CreateDB
+   public class CreateDB
     {
         public void Database()
         {
