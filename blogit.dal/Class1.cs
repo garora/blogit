@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace blogit.dal
 {
-    public class Class1
+    public class DataModification
     {
        //s hbhgjhh
     }
