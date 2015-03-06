@@ -6,27 +6,27 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
-
+using blogit.dal.Entities;
+using blogit.web;
 
 namespace blogit.dal
 {
-    public class NHibernate
+    class NHibernatecfg
     {
-    
-            private static ISessionFactory _sessionFactory;
+        private static ISessionFactory _sessionFactory;
 
-            private static ISessionFactory SessionFactory
+        private static ISessionFactory SessionFactory
+        {
+            get
             {
-                get
-                {
-                    if (_sessionFactory == null)
+                if (_sessionFactory == null)
 
-                        InitializeSessionFactory();
-                    return _sessionFactory;
-                }
+                    InitializeSessionFactory();
+                return _sessionFactory;
             }
+        }
 
-            private static void InitializeSessionFactory()
+        private static void InitializeSessionFactory()
             {
                 _sessionFactory = Fluently.Configure()
                     .Database(MsSqlConfiguration.MsSql2008
@@ -36,16 +36,15 @@ namespace blogit.dal
                     )
                     .Mappings(m =>
                               m.FluentMappings
-                                  .AddFromAssemblyOf<blogit.dal.DataModification>())
+                                  .AddFromAssemblyOf<blogit.web.Controllers.BuildDBController>())
                     .ExposeConfiguration(cfg => new SchemaExport(cfg)
                                                     .Create(true, true))
                     .BuildSessionFactory();
             }
 
-            public static ISession OpenSession()
-            {
-                return SessionFactory.OpenSession();
-            }
-        
+        public static ISession OpenSession()
+        {
+            return SessionFactory.OpenSession();
+        }
     }
 }
