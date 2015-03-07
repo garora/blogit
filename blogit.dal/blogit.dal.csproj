@@ -50,16 +50,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="NHibernate.cs" />
+    <Compile Include="CreateDB.cs" />
+    <Compile Include="Entities\Article.cs" />
+    <Compile Include="Entities\Author.cs" />
+    <Compile Include="Mapping\ArticleMap.cs" />
+    <Compile Include="Mapping\AuthorMap.cs" />
+    <Compile Include="NHibernatecfg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Mapping\" />
+    <ProjectReference Include="..\blogit.utility\blogit.utility.csproj">
+      <Project>{c2562a49-2b4e-4bfb-8f87-faabba8f94df}</Project>
+      <Name>blogit.utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

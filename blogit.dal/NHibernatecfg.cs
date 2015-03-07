@@ -7,6 +7,7 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using blogit.dal.Entities;
+using blogit.utility;
 
 
 namespace blogit.dal
@@ -14,6 +15,7 @@ namespace blogit.dal
     class NHibernatecfg
     {
         private static ISessionFactory _sessionFactory;
+        private static string configKey="cn" ;
 
         private static ISessionFactory SessionFactory
         {
@@ -27,20 +29,19 @@ namespace blogit.dal
         }
 
         private static void InitializeSessionFactory()
-            {
-                _sessionFactory = Fluently.Configure()
-                    .Database(MsSqlConfiguration.MsSql2008
-                                  .ConnectionString(
-                                      @"Server=.;initial catalog=blogit;integrated security=True")
-                                  .ShowSql()
-                    )
-                    .Mappings(m =>
-                              m.FluentMappings
-                                  .AddFromAssemblyOf<CreateDB>())
-                    .ExposeConfiguration(cfg => new SchemaExport(cfg)
-                                                    .Create(true, true))
-                    .BuildSessionFactory();
-            }
+        {
+            _sessionFactory = Fluently.Configure()
+                .Database(MsSqlConfiguration.MsSql2008
+                              .ConnectionString(Config.GetConfigValueAsString(configKey))
+                              .ShowSql()
+                )
+                .Mappings(m =>
+                          m.FluentMappings
+                              .AddFromAssemblyOf<CreateDB>())
+                .ExposeConfiguration(cfg => new SchemaExport(cfg)
+                                                .Create(true, true))
+                .BuildSessionFactory();
+        }
 
         public static ISession OpenSession()
         {
