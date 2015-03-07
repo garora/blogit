@@ -29,6 +29,8 @@ bld/
 *.VisualState.xml
 TestResult.xml
 
+#TypeScript-Map
+*.js.map
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
