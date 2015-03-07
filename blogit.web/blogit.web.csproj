@@ -203,6 +203,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BuildDBController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -306,6 +307,12 @@
     <TypeScriptCompile Include="Scripts\typings\references.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\type-detect\type-detect.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\blogit.dal\blogit.dal.csproj">
+      <Project>{59342bd8-1a37-4496-9082-1da4194ea722}</Project>
+      <Name>blogit.dal</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
