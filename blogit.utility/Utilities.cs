@@ -4,11 +4,12 @@ using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using HibernatingRhinos.Profiler.Appender.NHibernate;
 
-namespace blogit.utility
+namespace BlogIT.Utility
 {
     public static class Utilities
     {
@@ -24,14 +25,15 @@ namespace blogit.utility
         #endregion
 
         /// <summary>
-        /// Convert Enum to Generic List
+        ///     Convert Enum to Generic List
         /// </summary>
         /// <typeparam name="T">Enum type</typeparam>
         /// <returns></returns>
         public static List<T> EnumToList<T>()
         {
-            return Enum.GetValues(typeof(T)).Cast<T>().ToList();
+            return Enum.GetValues(typeof (T)).Cast<T>().ToList();
         }
+
         public static string GetDateTimeForDisplay(DateTime? date)
         {
             if (date == null)
@@ -40,8 +42,8 @@ namespace blogit.utility
             TimeSpan diff = DateTime.Now - date.Value;
 
             return diff.TotalDays < 1
-                       ? diff.Hours + "hrs " + diff.Minutes + "min ago"
-                       : date.Value.ToShortDateString() + " " + date.Value.ToShortTimeString();
+                ? diff.Hours + "hrs " + diff.Minutes + "min ago"
+                : date.Value.ToShortDateString() + " " + date.Value.ToShortTimeString();
         }
 
         public static string GetDateTimeForDisplay(DateTime date1, DateTime date2)
@@ -80,10 +82,10 @@ namespace blogit.utility
             date2 = date2.AddDays(1);
             days--;
 
-            var difference = date2.Subtract(date1);
+            TimeSpan difference = date2.Subtract(date1);
 
             //var result = string.Format("{0} years {1} month {2} days", years, months, days);
-            var result = string.Empty;
+            string result = string.Empty;
 
             if (years > 0)
                 result = string.Format("{0} years,", years);
@@ -110,14 +112,14 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// Return absolute month difference between two dates irrespective if difference is -ve
+        ///     Return absolute month difference between two dates irrespective if difference is -ve
         /// </summary>
         /// <param name="startDateTime"> </param>
         /// <param name="endDateTime"></param>
         /// <returns></returns>
         public static int MonthDifference(this DateTime startDateTime, DateTime endDateTime)
         {
-            return Math.Abs((startDateTime.Month - endDateTime.Month) + 12 * (startDateTime.Year - endDateTime.Year));
+            return Math.Abs((startDateTime.Month - endDateTime.Month) + 12*(startDateTime.Year - endDateTime.Year));
         }
 
         public static string GetDisplayUser(string user)
@@ -129,15 +131,21 @@ namespace blogit.utility
         {
             return string.IsNullOrEmpty(catName) ? "[undefined]" : catName;
         }
+
         /// <summary>
-        /// Remove all special characters
+        ///     Remove all special characters
         /// </summary>
         /// <param name="originalString"></param>
         /// <returns></returns>
         public static string RemoveSpecialCharacters(string originalString)
         {
             var newString = new StringBuilder();
-            foreach (var cToCheck in originalString.Where(chr => (chr >= '0' && chr <= '9') || (chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z') | chr == '.' || chr == '_' || chr == ' '))
+            foreach (
+                char cToCheck in
+                    originalString.Where(
+                        chr =>
+                            (chr >= '0' && chr <= '9') || (chr >= 'A' && chr <= 'Z') ||
+                            (chr >= 'a' && chr <= 'z') | chr == '.' || chr == '_' || chr == ' '))
             {
                 newString.Append(cToCheck);
             }
@@ -146,7 +154,7 @@ namespace blogit.utility
 
 
         /// <summary>
-        /// Format Date in the format of "ddddd MMMM dd, yyyy"
+        ///     Format Date in the format of "ddddd MMMM dd, yyyy"
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
@@ -159,7 +167,7 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// Format date in specified format make sure format string should verify IFormatProvider
+        ///     Format date in specified format make sure format string should verify IFormatProvider
         /// </summary>
         /// <param name="date"></param>
         /// <param name="format"></param>
@@ -173,7 +181,6 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="date"></param>
         /// <param name="checkToday"></param>
@@ -205,7 +212,6 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="dtString"></param>
         /// <returns></returns>
@@ -215,7 +221,6 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
@@ -236,19 +241,18 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="fromDate"></param>
         /// <param name="toDate"></param>
         /// <returns></returns>
         public static DateComparisonResult CompareDates(DateTime fromDate, DateTime toDate)
         {
-            return (DateComparisonResult)fromDate.CompareTo(toDate);
+            return (DateComparisonResult) fromDate.CompareTo(toDate);
         }
 
         /// <summary>
-        /// Check for Valid Session use for different places 
-        /// where need of session variables
+        ///     Check for Valid Session use for different places
+        ///     where need of session variables
         /// </summary>
         /// <returns></returns>
         //public static bool IsValidSession()
@@ -257,7 +261,6 @@ namespace blogit.utility
         //    object validSession = sessionManager.GetSessionItem(SessionKey.ValidUser);
         //    return (validSession != null);
         //}
-
         public static string GenerateActivationKey()
         {
             return Guid.NewGuid().ToString().Substring(0, 5);
@@ -267,43 +270,45 @@ namespace blogit.utility
         {
             return Guid.NewGuid().ToString().Substring(0, 5);
         }
+
         /// <summary>
-        /// Use this to add unique name string for attachments
+        ///     Use this to add unique name string for attachments
         /// </summary>
         /// <returns></returns>
         public static string GenerateUniqueStringForAttachment()
         {
             return Guid.NewGuid().ToString().Substring(0, 8);
         }
+
         #region "IList To DataSet Conversion"
+
         /// <summary>
-        /// Converts List for sepcific type to Dataset
+        ///     Converts List for sepcific type to Dataset
         /// </summary>
         /// <typeparam name="T">Type of Entity for a table exists in DB </typeparam>
         /// <param name="list">List of Generic collection for Type T</param>
         /// <returns>DataSet based on supplied Generic List</returns>
         public static DataSet ToDataSet<T>(IEnumerable<T> list)
         {
-            var elementType = typeof(T);
+            Type elementType = typeof (T);
             var ds = new DataSet();
             var t = new DataTable();
             ds.Tables.Add(t);
 
             //add a column to table for each public property on T 
-            foreach (var propInfo in elementType.GetProperties())
+            foreach (PropertyInfo propInfo in elementType.GetProperties())
             {
-
-                var colType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
+                Type colType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
 
                 t.Columns.Add(propInfo.Name, colType);
             }
 
             //go through each property on T and add each value to the table 
-            foreach (var item in list)
+            foreach (T item in list)
             {
-                var row = t.NewRow();
+                DataRow row = t.NewRow();
 
-                foreach (var propInfo in elementType.GetProperties())
+                foreach (PropertyInfo propInfo in elementType.GetProperties())
                 {
                     row[propInfo.Name] = propInfo.GetValue(item, null) ?? DBNull.Value;
                 }
@@ -313,9 +318,11 @@ namespace blogit.utility
 
             return ds;
         }
+
         #endregion
 
         #region Conversion methods
+
         public static string ObjectToString(this object obj)
         {
             return Convert.ToString(obj);
@@ -325,28 +332,28 @@ namespace blogit.utility
         {
             return Convert.ToInt32(obj);
         }
+
         #endregion
 
         #region BreadCrumbs
+
         public static string CreateFullAnchorTag(List<BreadCrumb> breadCrumbs)
         {
             var stringBuilder = new StringBuilder();
-            foreach (var breadCrumb in breadCrumbs)
+            foreach (BreadCrumb breadCrumb in breadCrumbs)
             {
                 stringBuilder.AppendFormat("<a href='{0}'>{1}</a>", breadCrumb.Url, breadCrumb.Title);
                 stringBuilder.Append(breadCrumb.Seprator);
             }
             return stringBuilder.ToString();
         }
+
         #endregion
-
-
     }
 
     public static class StringExtensions
     {
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="s"></param>
         /// <param name="result"></param>
@@ -365,15 +372,12 @@ namespace blogit.utility
                 result = new Guid(s);
                 return true;
             }
-            else
-            {
-                result = Guid.Empty;
-                return false;
-            }
+            result = Guid.Empty;
+            return false;
         }
 
         /// <summary>
-        /// Removed 3-charactes,positioned at the last (.aspx)
+        ///     Removed 3-charactes,positioned at the last (.aspx)
         /// </summary>
         /// <param name="oldText"></param>
         /// <returns></returns>
@@ -382,11 +386,6 @@ namespace blogit.utility
             return oldText.LastIndexOf('.') > 0 ? oldText.Remove(oldText.LastIndexOf('.')) : oldText;
         }
 
-        /// <summary>
-        /// Get the plain text from urlencoded text
-        /// </summary>
-        /// <param name="urlEncode"></param>
-        /// <returns></returns>
         //public static string UrlDecode(this string urlEncode)
         //{
         //    return HttpUtility.UrlDecode(urlEncode);
@@ -395,19 +394,21 @@ namespace blogit.utility
         //{
         //    return HttpUtility.UrlDecode(urlEncode).Replace(toReplace, " ");
         //}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="plainText"></param>
-        /// <returns></returns>
         //public static string UrlEncode(this string plainText)
         //{
         //    return HttpUtility.UrlDecode(plainText);
         //}
-
         /// <summary>
-        /// Replace white spaces with '_'
+        ///     Get the plain text from urlencoded text
+        /// </summary>
+        /// <param name="urlEncode"></param>
+        /// <returns></returns>
+        /// <summary>
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <returns></returns>
+        /// <summary>
+        ///     Replace white spaces with '_'
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
@@ -424,7 +425,8 @@ namespace blogit.utility
             var sb = new StringBuilder();
             if (inputString.Length > 0)
             {
-                sb.Append(inputString.Substring(0, 1).ToUpper()).Append(inputString.Substring(1, inputString.Length - 1));
+                sb.Append(inputString.Substring(0, 1).ToUpper())
+                    .Append(inputString.Substring(1, inputString.Length - 1));
             }
             return sb.ToString();
         }
@@ -434,13 +436,14 @@ namespace blogit.utility
             var sb = new StringBuilder();
             if (inputString.Length > 0)
             {
-                sb.Append(inputString.Substring(0, 1).ToLower()).Append(inputString.Substring(1, inputString.Length - 1));
+                sb.Append(inputString.Substring(0, 1).ToLower())
+                    .Append(inputString.Substring(1, inputString.Length - 1));
             }
             return sb.ToString();
         }
 
         /// <summary>
-        /// Case Insensitive String Replace
+        ///     Case Insensitive String Replace
         /// </summary>
         public static string StringReplace(string text, string oldValue, string newValue)
         {
@@ -458,25 +461,25 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// Converts an object from DBNULL to NULL
+        ///     Converts an object from DBNULL to NULL
         /// </summary>
         /// <param name="o"></param>
         /// <returns></returns>
         public static object ConvertFromDatabase(object o)
         {
             if (o == DBNull.Value) return null;
-            else return o;
+            return o;
         }
 
         /// <summary>
-        /// Converts an object from NULL to DBNULL
+        ///     Converts an object from NULL to DBNULL
         /// </summary>
         /// <param name="o"></param>
         /// <returns></returns>
         public static object ConvertToDatabase(object o)
         {
             if (o == null) return DBNull.Value;
-            else return o;
+            return o;
         }
 
         #region String Match
@@ -486,9 +489,9 @@ namespace blogit.utility
             if (s1 == null)
                 if (s2 == null) return true;
                 else return false;
-            else if (s2 == null) return false;
-            else if (s1.ToString().Length != s2.Length) return false;
-            else if (s1.ToString().Length == 0) return true;
+            if (s2 == null) return false;
+            if (s1.ToString().Length != s2.Length) return false;
+            if (s1.ToString().Length == 0) return true;
 
             return (String.Compare(s1.ToString(), s2, ignoreCase) == 0);
         }
@@ -498,9 +501,9 @@ namespace blogit.utility
             if (s1 == null)
                 if (s2 == null) return true;
                 else return false;
-            else if (s2 == null) return false;
-            else if (s1.Length != s2.Length) return false;
-            else if (s1.Length == 0) return true;
+            if (s2 == null) return false;
+            if (s1.Length != s2.Length) return false;
+            if (s1.Length == 0) return true;
 
             return (String.Compare(s1, s2, ignoreCase) == 0);
         }
@@ -544,7 +547,7 @@ namespace blogit.utility
                 output.Append(appendString);
             }
             string returnVal = output.ToString();
-            returnVal = returnVal.TrimStart(new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            returnVal = returnVal.TrimStart(new[] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'});
             if (returnVal.Length < 0)
                 throw new Exception("Cannot turn string( " + inputString + " ) into a valid variable name");
             return returnVal;
@@ -614,7 +617,7 @@ namespace blogit.utility
 
         public static String MemoryStreamToString(MemoryStream memStream)
         {
-            return ByteArrayToString(memStream.GetBuffer(), (int)memStream.Length);
+            return ByteArrayToString(memStream.GetBuffer(), (int) memStream.Length);
         }
 
         public static Byte[] StringToByteArray(string str)
@@ -652,20 +655,16 @@ namespace blogit.utility
         }
 
         #endregion
-
-
-
     }
 
     /// <summary>
-    /// Helper class to encode reserverd keywords of SQL server to use with Nhibernate entities
-    /// http://msdn.microsoft.com/en-us/library/aa258313%28v=sql.80%29.aspx
+    ///     Helper class to encode reserverd keywords of SQL server to use with Nhibernate entities
+    ///     http://msdn.microsoft.com/en-us/library/aa258313%28v=sql.80%29.aspx
     /// </summary>
-
     public static class EncodeSqlReservered
     {
         /// <summary>
-        /// Reserver keywords encoded with Braces 
+        ///     Reserver keywords encoded with Braces
         /// </summary>
         /// <param name="keywordToEncode"> Reserved keyword like Group, User, server</param>
         /// <returns></returns>
@@ -674,10 +673,10 @@ namespace blogit.utility
             return string.Format("[{0}]", keywordToEncode);
         }
 
-
         #region Extension Methods
+
         /// <summary>
-        /// Supplied keyword string encoded with braces eg. Group - > [Group]
+        ///     Supplied keyword string encoded with braces eg. Group - > [Group]
         /// </summary>
         /// <param name="keywordToEncode">Keyword</param>
         /// <returns></returns>
@@ -685,8 +684,8 @@ namespace blogit.utility
         {
             return string.Format("[{0}]", keywordToEncode);
         }
-        #endregion
 
+        #endregion
     }
 
     public class PagingInfo
@@ -719,19 +718,19 @@ namespace blogit.utility
 
         public long PagesCount
         {
-            get { return (long)Math.Ceiling(RowCount / (double)PageSize); }
+            get { return (long) Math.Ceiling(RowCount/(double) PageSize); }
         }
     }
 
     /// <summary>
-    /// Static class with some entity related methods
+    ///     Static class with some entity related methods
     /// </summary>
     public static class EntityHelper
     {
-        private const string NotvalidChars = ",;:\"'\\/<>&?=\t\r\n ";  //  ,;:"'\/<>&?=
+        private const string NotvalidChars = ",;:\"'\\/<>&?=\t\r\n "; //  ,;:"'\/<>&?=
 
         /// <summary>
-        /// Check if the specified code can be used safely (doesn't contain special characters)
+        ///     Check if the specified code can be used safely (doesn't contain special characters)
         /// </summary>
         /// <param name="fieldName"></param>
         /// <param name="code"></param>
@@ -739,7 +738,7 @@ namespace blogit.utility
         {
             if (code != null)
             {
-                var index = code.LastIndexOfAny(NotvalidChars.ToCharArray());
+                int index = code.LastIndexOfAny(NotvalidChars.ToCharArray());
                 if (index >= 0)
                     throw new Exception();
             }
@@ -749,13 +748,12 @@ namespace blogit.utility
     public static class HibernateProfilerHelper
     {
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="initialize"></param>
         public static void InitializeHibernateProfiler(bool initialize)
         {
             if (initialize)
-                HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
+                NHibernateProfiler.Initialize();
         }
     }
 
@@ -763,10 +761,10 @@ namespace blogit.utility
     {
         public string Title { get; set; }
         public string Url { get; set; }
+
         public string Seprator
         {
             get { return string.Format("<span class='{0}'></span>", "separator"); }
         }
-
     }
 }

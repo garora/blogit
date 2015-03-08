@@ -1,6 +1,6 @@
 Imports HibernatingRhinos.Profiler.Appender.NHibernate
 
-<assembly: WebActivatorEx.PreApplicationStartMethod(GetType(Global.blogit.utility.App_Start.NHibernateProfilerBootstrapper), "PreStart")>
+<Assembly: WebActivatorEx.PreApplicationStartMethod(GetType(Global.BlogIT.Utility.App_Start.NHibernateProfilerBootstrapper), "PreStart")> 
 Namespace App_Start
 	Public Class NHibernateProfilerBootstrapper
 		Public Shared Sub PreStart()

@@ -1,3 +1,4 @@
+/// <reference path="../../../typings/references.d.ts" />
 var app;
 (function (app) {
     var admin;

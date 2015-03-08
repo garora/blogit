@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using blogit.dal;
+﻿using System.Web.Mvc;
+using BlogIT.Dal;
 
-
-namespace blogit.web.Controllers
+namespace BlogIT.Web.Controllers
 {
     public class BuildDBController : Controller
     {
         // GET: BuildDB
         public ActionResult Index()
         {
-            CreateDB cDB = new CreateDB();
+            var cDB = new CreateDB();
             cDB.Database();
 
             return View();

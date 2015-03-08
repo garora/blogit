@@ -309,9 +309,9 @@
     <TypeScriptCompile Include="Scripts\typings\type-detect\type-detect.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\blogit.dal\blogit.dal.csproj">
+    <ProjectReference Include="..\blogit.dal\BlogIT.Dal.csproj">
       <Project>{59342bd8-1a37-4496-9082-1da4194ea722}</Project>
-      <Name>blogit.dal</Name>
+      <Name>BlogIT.Dal</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

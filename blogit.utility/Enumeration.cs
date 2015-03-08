@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace blogit.utility
+﻿namespace BlogIT.Utility
 {
     public class Enumeration
     {
-
-        public Enumeration()
-        {
-            //Todo Need to look if we can call all enumerations through class constructor
-        }
     }
 
     public enum UserDetail
@@ -37,6 +26,7 @@ namespace blogit.utility
         Attachment = 5,
         Job = 6
     }
+
     public enum ArticleStatus
     {
         All = 1,
@@ -47,6 +37,7 @@ namespace blogit.utility
         EnabledAndApproved = 6,
         DisabledOrNotApproved = 7
     }
+
     public enum NewsStatus
     {
         All = 1,
@@ -57,6 +48,7 @@ namespace blogit.utility
         EnabledAndNotExpired = 6,
         DisabledOrExpired = 7
     }
+
     public enum VideoStatus
     {
         All = 1,
@@ -67,6 +59,7 @@ namespace blogit.utility
         EnabledAndNotExpired = 6,
         DisabledOrExpired = 7
     }
+
     public enum JobStatus
     {
         All = 1,
@@ -77,12 +70,14 @@ namespace blogit.utility
         EnabledAndNotExpired = 6,
         DisabledOrExpired = 7,
     }
+
     public enum AttachmentStatus
     {
         All = 1,
         Approved = 2,
         NotApproved = 3
     }
+
     public enum Role
     {
         Regular = 1,
@@ -96,6 +91,7 @@ namespace blogit.utility
         Contributor = 9,
         Publisher = 10
     }
+
     public enum Permission
     {
         All = 1,
@@ -106,6 +102,7 @@ namespace blogit.utility
         ReadWriteEditDeleteApprove = 6,
         None = 7
     }
+
     public enum EnabledStatus
     {
         All = 0,
@@ -127,6 +124,7 @@ namespace blogit.utility
         EndWith = 3,
         Contains = 4
     }
+
     public enum CommandNames
     {
         Delete = 1,
@@ -135,5 +133,4 @@ namespace blogit.utility
         Approve = 4,
         Reject = 5
     }
-
 }

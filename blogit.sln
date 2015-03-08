@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blogit.web", "blogit.web\blogit.web.csproj", "{70517CB7-C09A-46A2-97CB-09C16EF3F89C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogIT.Web", "blogit.web\BlogIT.Web.csproj", "{70517CB7-C09A-46A2-97CB-09C16EF3F89C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blogit.web.Tests", "blogit.web.Tests\blogit.web.Tests.csproj", "{63CC9C4B-B6AB-47DE-81B2-3365CF75E0DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogIT.Web.Tests", "blogit.web.Tests\BlogIT.Web.Tests.csproj", "{63CC9C4B-B6AB-47DE-81B2-3365CF75E0DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blogit.data", "blogit.data\blogit.data.csproj", "{248B694E-99A1-4C5B-8561-A74793CC629B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogIT.Data", "blogit.data\BlogIT.Data.csproj", "{248B694E-99A1-4C5B-8561-A74793CC629B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blogit.dal", "blogit.dal\blogit.dal.csproj", "{59342BD8-1A37-4496-9082-1DA4194EA722}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogIT.Dal", "blogit.dal\BlogIT.Dal.csproj", "{59342BD8-1A37-4496-9082-1DA4194EA722}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blogit.utility", "blogit.utility\blogit.utility.csproj", "{C2562A49-2B4E-4BFB-8F87-FAABBA8F94DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogIT.Utility", "blogit.utility\BlogIT.Utility.csproj", "{C2562A49-2B4E-4BFB-8F87-FAABBA8F94DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F1DA0D31-B967-4D11-BFDE-CEAE329B3126}"
 	ProjectSection(SolutionItems) = preProject

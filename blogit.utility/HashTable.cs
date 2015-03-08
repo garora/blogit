@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
-namespace blogit.utility
+namespace BlogIT.Utility
 {
     public class HashTable
     {
@@ -32,14 +27,15 @@ namespace blogit.utility
                 strRes = HT[Key].ToString();
             return strRes;
         }
+
         public static bool MatchKey(string Key, Hashtable HT)
         {
             bool blnRes = false;
             if ((Key != null) && (HT.ContainsKey(Key)))
                 blnRes = true;
             return blnRes;
-
         }
+
         public static bool MatchKey(string[] Keys, Hashtable HT)
         {
             bool blnRes = false;
@@ -51,7 +47,6 @@ namespace blogit.utility
             }
 
             return blnRes;
-
         }
 
         public static void RemoveItem(string Key, Hashtable HT)

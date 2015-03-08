@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using BlogIT.Web.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using blogit.web;
-using blogit.web.Controllers;
 
-namespace blogit.web.Tests.Controllers
+namespace BlogIT.Web.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest
@@ -16,10 +11,10 @@ namespace blogit.web.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            var result = controller.Index() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -29,10 +24,10 @@ namespace blogit.web.Tests.Controllers
         public void About()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var controller = new HomeController();
 
             // Act
-            ViewResult result = controller.About() as ViewResult;
+            var result = controller.About() as ViewResult;
 
             // Assert
             Assert.AreEqual("Your application description page.", result.ViewBag.Message);
@@ -42,10 +37,10 @@ namespace blogit.web.Tests.Controllers
         public void Contact()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Contact() as ViewResult;
+            var result = controller.Contact() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

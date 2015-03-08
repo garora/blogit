@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using blogit.web.Models;
+using BlogIT.Web.Models;
 
-namespace blogit.web.Controllers
+namespace BlogIT.Web.Controllers
 {
     [Authorize]
     public class ManageController : Controller

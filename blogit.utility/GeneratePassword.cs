@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace blogit.utility
+namespace BlogIT.Utility
 {
     /// <summary>
-    /// This class can generate random passwords, which do not include ambiguous 
-    /// characters, such as I, l, and 1. The generated password will be made of
-    /// 7-bit ASCII symbols. Every four characters will include one lower case
-    /// character, one upper case character, one number, and one special symbol
-    /// (such as '%') in a random order. The password will always start with an
-    /// alpha-numeric character; it will not start with a special symbol (we do
-    /// this because some back-end systems do not like certain special
-    /// characters in the first position).
+    ///     This class can generate random passwords, which do not include ambiguous
+    ///     characters, such as I, l, and 1. The generated password will be made of
+    ///     7-bit ASCII symbols. Every four characters will include one lower case
+    ///     character, one upper case character, one number, and one special symbol
+    ///     (such as '%') in a random order. The password will always start with an
+    ///     alpha-numeric character; it will not start with a special symbol (we do
+    ///     this because some back-end systems do not like certain special
+    ///     characters in the first position).
     /// </summary>
     public class GeneratePassword
     {
@@ -31,15 +27,15 @@ namespace blogit.utility
         private const string PasswordCharsSpecial = "*$-+?_&=!%{}/";
 
         /// <summary>
-        /// Generates a random password.
+        ///     Generates a random password.
         /// </summary>
         /// <returns>
-        /// Randomly generated password.
+        ///     Randomly generated password.
         /// </returns>
         /// <remarks>
-        /// The length of the generated password will be determined at
-        /// random. It will be no shorter than the minimum default and
-        /// no longer than maximum default.
+        ///     The length of the generated password will be determined at
+        ///     random. It will be no shorter than the minimum default and
+        ///     no longer than maximum default.
         /// </remarks>
         public static string Generate()
         {
@@ -47,13 +43,13 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// Generates a random password of the exact length.
+        ///     Generates a random password of the exact length.
         /// </summary>
         /// <param name="length">
-        /// Exact password length.
+        ///     Exact password length.
         /// </param>
         /// <returns>
-        /// Randomly generated password.
+        ///     Randomly generated password.
         /// </returns>
         public static string Generate(int length)
         {
@@ -61,24 +57,24 @@ namespace blogit.utility
         }
 
         /// <summary>
-        /// Generates a random password.
+        ///     Generates a random password.
         /// </summary>
         /// <param name="minLength">
-        /// Minimum password length.
+        ///     Minimum password length.
         /// </param>
         /// <param name="maxLength">
-        /// Maximum password length.
+        ///     Maximum password length.
         /// </param>
         /// <returns>
-        /// Randomly generated password.
+        ///     Randomly generated password.
         /// </returns>
         /// <remarks>
-        /// The length of the generated password will be determined at
-        /// random and it will fall with the range determined by the
-        /// function parameters.
+        ///     The length of the generated password will be determined at
+        ///     random and it will fall with the range determined by the
+        ///     function parameters.
         /// </remarks>
         public static string Generate(int minLength,
-                                      int maxLength)
+            int maxLength)
         {
             // Make sure that input parameters are valid.
             if (minLength <= 0 || maxLength <= 0 || minLength > maxLength)
@@ -88,26 +84,26 @@ namespace blogit.utility
             // grouped by types. You can remove character groups from this
             // array, but doing so will weaken the password strength.
             var charGroups = new[]
-                                 {
-                                     PasswordCharsLcase.ToCharArray(),
-                                     PasswordCharsUcase.ToCharArray(),
-                                     PasswordCharsNumeric.ToCharArray(),
-                                     PasswordCharsSpecial.ToCharArray()
-                                 };
+            {
+                PasswordCharsLcase.ToCharArray(),
+                PasswordCharsUcase.ToCharArray(),
+                PasswordCharsNumeric.ToCharArray(),
+                PasswordCharsSpecial.ToCharArray()
+            };
 
             // Use this array to track the number of unused characters in each
             // character group.
             var charsLeftInGroup = new int[charGroups.Length];
 
             // Initially, all characters in each group are not used.
-            for (var i = 0; i < charsLeftInGroup.Length; i++)
+            for (int i = 0; i < charsLeftInGroup.Length; i++)
                 charsLeftInGroup[i] = charGroups[i].Length;
 
             // Use this array to track (iterate through) unused character groups.
             var leftGroupsOrder = new int[charGroups.Length];
 
             // Initially, all character groups are not used.
-            for (var i = 0; i < leftGroupsOrder.Length; i++)
+            for (int i = 0; i < leftGroupsOrder.Length; i++)
                 leftGroupsOrder[i] = i;
 
             // Because we cannot use the default randomizer, which is based on the
@@ -124,7 +120,7 @@ namespace blogit.utility
             rng.GetBytes(randomBytes);
 
             // Convert 4 bytes into a 32-bit integer value.
-            var seed = (randomBytes[0] & 0x7f) << 24 |
+            int seed = (randomBytes[0] & 0x7f) << 24 |
                        randomBytes[1] << 16 |
                        randomBytes[2] << 8 |
                        randomBytes[3];
@@ -149,10 +145,10 @@ namespace blogit.utility
             int lastCharIdx;
 
             // Index of the last non-processed group.
-            var lastLeftGroupsOrderIdx = leftGroupsOrder.Length - 1;
+            int lastLeftGroupsOrderIdx = leftGroupsOrder.Length - 1;
 
             // Generate password characters one at a time.
-            for (var i = 0; i < password.Length; i++)
+            for (int i = 0; i < password.Length; i++)
             {
                 // If only one character group remained unprocessed, process it;
                 // otherwise, pick a random character group from the unprocessed
@@ -163,18 +159,18 @@ namespace blogit.utility
                     nextLeftGroupsOrderIdx = 0;
                 else
                     nextLeftGroupsOrderIdx = random.Next(0,
-                                                         lastLeftGroupsOrderIdx);
+                        lastLeftGroupsOrderIdx);
 
                 // Get the actual index of the character group, from which we will
                 // pick the next character.
-                var nextGroupIdx = leftGroupsOrder[nextLeftGroupsOrderIdx];
+                int nextGroupIdx = leftGroupsOrder[nextLeftGroupsOrderIdx];
 
                 // Get the index of the last unprocessed characters in this group.
                 lastCharIdx = charsLeftInGroup[nextGroupIdx] - 1;
 
                 // If only one unprocessed character is left, pick it; otherwise,
                 // get a random character from the unused character list.
-                var nextCharIdx = lastCharIdx == 0 ? 0 : random.Next(0, lastCharIdx + 1);
+                int nextCharIdx = lastCharIdx == 0 ? 0 : random.Next(0, lastCharIdx + 1);
 
                 // Add this character to the password.
                 password[i] = charGroups[nextGroupIdx][nextCharIdx];
@@ -183,7 +179,7 @@ namespace blogit.utility
                 if (lastCharIdx == 0)
                     charsLeftInGroup[nextGroupIdx] =
                         charGroups[nextGroupIdx].Length;
-                // There are more unprocessed characters left.
+                    // There are more unprocessed characters left.
                 else
                 {
                     // Swap processed character with the last unprocessed character
@@ -191,7 +187,7 @@ namespace blogit.utility
                     // this group.
                     if (lastCharIdx != nextCharIdx)
                     {
-                        var temp = charGroups[nextGroupIdx][lastCharIdx];
+                        char temp = charGroups[nextGroupIdx][lastCharIdx];
                         charGroups[nextGroupIdx][lastCharIdx] =
                             charGroups[nextGroupIdx][nextCharIdx];
                         charGroups[nextGroupIdx][nextCharIdx] = temp;
@@ -204,14 +200,14 @@ namespace blogit.utility
                 // If we processed the last group, start all over.
                 if (lastLeftGroupsOrderIdx == 0)
                     lastLeftGroupsOrderIdx = leftGroupsOrder.Length - 1;
-                // There are more unprocessed groups left.
+                    // There are more unprocessed groups left.
                 else
                 {
                     // Swap processed group with the last unprocessed group
                     // so that we don't pick it until we process all groups.
                     if (lastLeftGroupsOrderIdx != nextLeftGroupsOrderIdx)
                     {
-                        var temp = leftGroupsOrder[lastLeftGroupsOrderIdx];
+                        int temp = leftGroupsOrder[lastLeftGroupsOrderIdx];
                         leftGroupsOrder[lastLeftGroupsOrderIdx] =
                             leftGroupsOrder[nextLeftGroupsOrderIdx];
                         leftGroupsOrder[nextLeftGroupsOrderIdx] = temp;
