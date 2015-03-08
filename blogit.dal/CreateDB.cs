@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using blogit.dal.Entities;
+using BlogIT.Dal.Entities;
 
-namespace blogit.dal
+namespace BlogIT.Dal
 {
    public class CreateDB
     {
         public void Database()
         {
 
-            using (var session = blogit.dal.NHibernatecfg.OpenSession())
+            using (var session = BlogIT.Dal.NHibernatecfg.OpenSession())
             {
                 using (var transaction = session.BeginTransaction())
                 {

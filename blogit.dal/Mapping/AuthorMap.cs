@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BlogIT.Dal.Entities;
 using FluentNHibernate.Mapping;
-using blogit.dal.Entities;
 
-namespace blogit.dal.Mapping
+namespace BlogIT.Dal.Mapping
 {
-    class AuthorMap: ClassMap<Author>
+    internal class AuthorMap : ClassMap<Author>
     {
         //Constructor
         public AuthorMap()

@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BlogIT.Dal.Entities;
 using FluentNHibernate.Mapping;
-using blogit.dal.Entities;
 
-namespace blogit.dal.Mapping
+namespace BlogIT.Dal.Mapping
 {
-    class ArticleMap : ClassMap<Article>
+    internal class ArticleMap : ClassMap<Article>
     {
         public ArticleMap()
         {
             Id(x => x.Id);
 
             Map(x => x.Name);
-            
+
             Map(x => x.Body);
 
             Table("Article");

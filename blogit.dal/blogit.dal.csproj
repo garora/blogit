@@ -53,8 +53,27 @@
     <Compile Include="CreateDB.cs" />
     <Compile Include="Entities\Article.cs" />
     <Compile Include="Entities\Author.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\Content.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\GroupRight.cs" />
+    <Compile Include="Entities\Menu.cs" />
+    <Compile Include="Entities\Section.cs" />
+    <Compile Include="Entities\SiteOption.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserDetail.cs" />
     <Compile Include="Mapping\ArticleMap.cs" />
     <Compile Include="Mapping\AuthorMap.cs" />
+    <Compile Include="Mapping\CategoryMap.cs" />
+    <Compile Include="Mapping\CommentMap.cs" />
+    <Compile Include="Mapping\ContentMap.cs" />
+    <Compile Include="Mapping\GroupMap.cs" />
+    <Compile Include="Mapping\GroupRightMap.cs" />
+    <Compile Include="Mapping\MenuMap.cs" />
+    <Compile Include="Mapping\SectionMap.cs" />
+    <Compile Include="Mapping\SiteOptionMap.cs" />
+    <Compile Include="Mapping\UserDetailMap.cs" />
     <Compile Include="NHibernatecfg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,9 +82,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\blogit.utility\blogit.utility.csproj">
+    <ProjectReference Include="..\blogit.utility\BlogIT.Utility.csproj">
       <Project>{c2562a49-2b4e-4bfb-8f87-faabba8f94df}</Project>
-      <Name>blogit.utility</Name>
+      <Name>BlogIT.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

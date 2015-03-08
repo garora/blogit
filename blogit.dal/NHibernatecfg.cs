@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using BlogIT.Utility;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
-using blogit.dal.Entities;
-using blogit.utility;
 
-
-namespace blogit.dal
+namespace BlogIT.Dal
 {
-    class NHibernatecfg
+    internal class NHibernatecfg
     {
         private static ISessionFactory _sessionFactory;
-        private static string configKey="cn" ;
+        private const string ConfigKey = "cn";
 
         private static ISessionFactory SessionFactory
         {
@@ -32,14 +26,14 @@ namespace blogit.dal
         {
             _sessionFactory = Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2008
-                              .ConnectionString(Config.GetConfigValueAsString(configKey))
-                              .ShowSql()
+                    .ConnectionString(Config.GetConfigValueAsString(ConfigKey))
+                    .ShowSql()
                 )
                 .Mappings(m =>
-                          m.FluentMappings
-                              .AddFromAssemblyOf<CreateDB>())
+                    m.FluentMappings
+                        .AddFromAssemblyOf<CreateDB>())
                 .ExposeConfiguration(cfg => new SchemaExport(cfg)
-                                                .Create(true, true))
+                    .Create(true, true))
                 .BuildSessionFactory();
         }
 
