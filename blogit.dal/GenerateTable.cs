@@ -1,31 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.IO;
 using System.CodeDom;
-using System.CodeDom.Compiler;
-using Microsoft.CSharp;
+using System.Reflection;
 
-namespace blogit.dal
+namespace BlogIT.Dal
 {
-    class GenerateTable
+    internal class GenerateTable
     {
-        CodeCompileUnit targetUnit;
-
-        CodeTypeDeclaration targetClass;
-
         //Class Name
-        private const string outputFileName = "Mahsa.cs";
+        private const string OutputFileName = "Mahsa.cs";
+        private readonly CodeTypeDeclaration _targetClass;
 
         public GenerateTable()
         {
-            targetUnit = new CodeCompileUnit();
+            var targetUnit = new CodeCompileUnit();
 
             //Path
-            CodeNamespace samples = new CodeNamespace("blogit.dal.Entities");
+            var samples = new CodeNamespace("BlogIT.Dal.Entities");
 
 
             //Namespace
@@ -35,38 +25,42 @@ namespace blogit.dal
             samples.Imports.Add(new CodeNamespaceImport("System.Text"));
             samples.Imports.Add(new CodeNamespaceImport("System.Threading.Tasks"));
 
-            targetClass = new CodeTypeDeclaration("Mahsa");
-            targetClass.IsClass = true;
-            targetClass.TypeAttributes =
-                TypeAttributes.Public | TypeAttributes.Sealed;
-            samples.Types.Add(targetClass);
+            _targetClass = new CodeTypeDeclaration("Mahsa")
+            {
+                IsClass = true,
+                TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed
+            };
+            samples.Types.Add(_targetClass);
             targetUnit.Namespaces.Add(samples);
         }
 
         public void AddFields()
         {
             // Declare the ID Property.
-            CodeMemberProperty IDProperty = new CodeMemberProperty();
-            IDProperty.Attributes = MemberAttributes.Public;
-            IDProperty.Name = "Id";
-            IDProperty.HasGet = true;
-            IDProperty.HasSet = true;
-            IDProperty.Type = new CodeTypeReference(typeof(System.Int16));
-            IDProperty.Comments.Add(new CodeCommentStatement(
-            "Id is identity"));
-            targetClass.Members.Add(IDProperty);
+            var idProperty = new CodeMemberProperty
+            {
+                Attributes = MemberAttributes.Public,
+                Name = "Id",
+                HasGet = true,
+                HasSet = true,
+                Type = new CodeTypeReference(typeof(Int16))
+            };
+
+            idProperty.Comments.Add(new CodeCommentStatement(
+                "Id is identity"));
+            _targetClass.Members.Add(idProperty);
 
             // Declare the Name field
-            CodeMemberField Name = new CodeMemberField();
+            var name = new CodeMemberField
+            {
+                Attributes = MemberAttributes.Public,
+                Name = "Name",
+                Type = new CodeTypeReference(typeof(String))
+            };
 
-            Name.Attributes = MemberAttributes.Public;
-            Name.Name = "Name";
-            Name.Type =
-                new CodeTypeReference(typeof(System.String));
             //Name.Comments.Add(new CodeCommentStatement(
             //     "Name is string"));
-            targetClass.Members.Add(Name);
-
+            _targetClass.Members.Add(name);
         }
     }
 }

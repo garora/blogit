@@ -7,8 +7,8 @@
     <ProjectGuid>{248B694E-99A1-4C5B-8561-A74793CC629B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>blogit.data</RootNamespace>
-    <AssemblyName>blogit.data</AssemblyName>
+    <RootNamespace>BlogIT.Data</RootNamespace>
+    <AssemblyName>BlogIT.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

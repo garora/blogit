@@ -7,8 +7,8 @@
     <ProjectGuid>{59342BD8-1A37-4496-9082-1DA4194EA722}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>blogit.dal</RootNamespace>
-    <AssemblyName>blogit.dal</AssemblyName>
+    <RootNamespace>BlogIT.Dal</RootNamespace>
+    <AssemblyName>BlogIT.Dal</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -63,6 +63,7 @@
     <Compile Include="Entities\SiteOption.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserDetail.cs" />
+    <Compile Include="GenerateTable.cs" />
     <Compile Include="Mapping\ArticleMap.cs" />
     <Compile Include="Mapping\AuthorMap.cs" />
     <Compile Include="Mapping\CategoryMap.cs" />

@@ -9,8 +9,8 @@
     <ProjectGuid>{63CC9C4B-B6AB-47DE-81B2-3365CF75E0DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>blogit.web.Tests</RootNamespace>
-    <AssemblyName>blogit.web.Tests</AssemblyName>
+    <RootNamespace>BlogIT.Web.Test</RootNamespace>
+    <AssemblyName>BlogIT.Web.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
