@@ -314,6 +314,10 @@
       <Project>{59342bd8-1a37-4496-9082-1da4194ea722}</Project>
       <Name>BlogIT.Dal</Name>
     </ProjectReference>
+    <ProjectReference Include="..\blogit.utility\BlogIT.Utility.csproj">
+      <Project>{c2562a49-2b4e-4bfb-8f87-faabba8f94df}</Project>
+      <Name>BlogIT.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

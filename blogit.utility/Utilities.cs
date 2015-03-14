@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
@@ -13,6 +14,30 @@ namespace BlogIT.Utility
 {
     public static class Utilities
     {
+        public static string ToBase64(byte[] encryptedBytes)
+        {
+            return Convert.ToBase64String(encryptedBytes);
+        }
+
+        public static byte[] FromBase64(string text)
+        {
+            return Convert.FromBase64String(text);
+        }
+        public static byte[] ToUTFBytes(string text)
+        {
+            return Encoding.UTF8.GetBytes(text);
+        }
+
+        public static string ToUTFText(byte[] bytesDecrypted)
+        {
+            return Encoding.UTF8.GetString(bytesDecrypted);
+        }
+
+        public static byte[] ToSHA256HashBytes(byte[] keyBytes)
+        {
+            return SHA256.Create().ComputeHash(keyBytes);
+        }
+
         #region DateComparisonResult enum
 
         public enum DateComparisonResult

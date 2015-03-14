@@ -52,12 +52,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AESEncryption.cs" />
     <Compile Include="App_Start\NHibernateProfilerBootstrapper.cs" />
     <Compile Include="CleanUtil.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="GeneratePassword.cs" />
     <Compile Include="HashTable.cs" />
+    <Compile Include="IEncryptDecrypt.cs" />
     <Compile Include="NETEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
