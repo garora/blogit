@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Text;
 using System.IO;
-using System.Linq;
-using System.Collections.Generic;
-using System.Globalization;
-using BlogIT.Web.Models;
-using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
+using System.Text;
 using System.Web.Mvc;
 
 namespace BlogIT.Web.Controllers
 {
-    
     public class EncryptionByAESController : Controller
     {
         public ActionResult Index()
@@ -21,7 +13,6 @@ namespace BlogIT.Web.Controllers
             ViewData["Encrypted"] = TempData["TEncrypted"];
             ViewData["Decrypted"] = TempData["TDecrypted"];
             return View();
-
         }
 
         //txtforEN is PlainText
@@ -48,7 +39,6 @@ namespace BlogIT.Web.Controllers
             string encryptionText = Convert.ToBase64String(bytesEncrypted);
 
 
-
             TempData["TEncrypted"] = encryptionText;
             return RedirectToAction("Index");
         }
@@ -64,18 +54,18 @@ namespace BlogIT.Web.Controllers
             //rainbow table is precomputed key for cracking password
             // Set your salt here, change it to meet your flavor:
             // The salt bytes must be at least 8 bytes.  == 16 bits
-            byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            byte[] saltBytes = {1, 2, 3, 4, 5, 6, 7, 8};
 
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (RijndaelManaged AES = new RijndaelManaged())
+                using (var AES = new RijndaelManaged())
                 {
                     AES.KeySize = 256;
                     AES.BlockSize = 128;
 
                     var key = new Rfc2898DeriveBytes(Key, saltBytes, 1000);
-                    AES.Key = key.GetBytes(AES.KeySize / 8);
-                    AES.IV = key.GetBytes(AES.BlockSize / 8);
+                    AES.Key = key.GetBytes(AES.KeySize/8);
+                    AES.IV = key.GetBytes(AES.BlockSize/8);
 
                     AES.Mode = CipherMode.CBC;
 
@@ -114,18 +104,18 @@ namespace BlogIT.Web.Controllers
 
             // Set your salt here, change it to meet your flavor:
             // The salt bytes must be at least 8 bytes.
-            byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            byte[] saltBytes = {1, 2, 3, 4, 5, 6, 7, 8};
 
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (RijndaelManaged AES = new RijndaelManaged())
+                using (var AES = new RijndaelManaged())
                 {
                     AES.KeySize = 256;
                     AES.BlockSize = 128;
 
                     var key = new Rfc2898DeriveBytes(Key, saltBytes, 1000);
-                    AES.Key = key.GetBytes(AES.KeySize / 8);
-                    AES.IV = key.GetBytes(AES.BlockSize / 8);
+                    AES.Key = key.GetBytes(AES.KeySize/8);
+                    AES.IV = key.GetBytes(AES.BlockSize/8);
 
                     AES.Mode = CipherMode.CBC;
 
