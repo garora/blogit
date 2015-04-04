@@ -1,66 +1,215 @@
 ﻿using System;
-using System.CodeDom;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Reflection;
+using System.IO;
+using System.CodeDom;
+using System.CodeDom.Compiler;
+using Microsoft.CSharp;
+using System.Reflection;
+using System.Web;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+
+
 
 namespace BlogIT.Dal
 {
     internal class GenerateTable
     {
-        //Class Name
-        private const string OutputFileName = "Mahsa.cs";
-        private readonly CodeTypeDeclaration _targetClass;
+        
+            CodeCompileUnit targetUnit;
 
-        public GenerateTable()
-        {
-            var targetUnit = new CodeCompileUnit();
-
-            //Path
-            var samples = new CodeNamespace("BlogIT.Dal.Entities");
+            CodeTypeDeclaration targetClass;
 
 
-            //Namespace
-            samples.Imports.Add(new CodeNamespaceImport("System"));
-            samples.Imports.Add(new CodeNamespaceImport("System.Collections.Generic"));
-            samples.Imports.Add(new CodeNamespaceImport("System.Linq"));
-            samples.Imports.Add(new CodeNamespaceImport("System.Text"));
-            samples.Imports.Add(new CodeNamespaceImport("System.Threading.Tasks"));
-
-            _targetClass = new CodeTypeDeclaration("Mahsa")
+            public GenerateTable(string tableName)
             {
-                IsClass = true,
-                TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed
-            };
-            samples.Types.Add(_targetClass);
-            targetUnit.Namespaces.Add(samples);
-        }
+                targetUnit = new CodeCompileUnit();
 
-        public void AddFields()
-        {
-            // Declare the ID Property.
-            var idProperty = new CodeMemberProperty
+                //Path
+                CodeNamespace samples = new CodeNamespace("BlogIT.Dal.Entities");
+
+                //Namespace
+                samples.Imports.Add(new CodeNamespaceImport("System"));
+                samples.Imports.Add(new CodeNamespaceImport("System.Collections.Generic"));
+                samples.Imports.Add(new CodeNamespaceImport("System.Linq"));
+                samples.Imports.Add(new CodeNamespaceImport("System.Text"));
+                samples.Imports.Add(new CodeNamespaceImport("BlogIT.Dal.Entities"));
+
+                targetClass = new CodeTypeDeclaration(tableName);
+                targetClass.IsClass = true;
+                targetClass.TypeAttributes =
+                    TypeAttributes.Public;
+                samples.Types.Add(targetClass);
+                targetUnit.Namespaces.Add(samples);
+            }
+
+            public void AddFields(string fld1, string dt1, string fld2, string dt2)
             {
-                Attributes = MemberAttributes.Public,
-                Name = "Id",
-                HasGet = true,
-                HasSet = true,
-                Type = new CodeTypeReference(typeof(Int16))
-            };
+                CodeMemberField field1 = new CodeMemberField();
+                field1.Attributes = MemberAttributes.Private;
+                if (dt1 == "int")
+                {
+                    field1.Type = new CodeTypeReference(typeof(System.Int32));
+                }
+                else if (dt1 == "string")
+                {
+                    field1.Type = new CodeTypeReference(typeof(System.String));
+                }
 
-            idProperty.Comments.Add(new CodeCommentStatement(
-                "Id is identity"));
-            _targetClass.Members.Add(idProperty);
+                field1.Name = "_" + fld1;
+                targetClass.Members.Add(field1);
 
-            // Declare the Name field
-            var name = new CodeMemberField
+                CodeMemberProperty property1 = new CodeMemberProperty();
+                property1.GetStatements.Add(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + fld1)));
+                property1.SetStatements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + fld1), new CodePropertySetValueReferenceExpression()));
+                property1.Attributes = MemberAttributes.Public;
+                property1.Name = fld1;
+                if (dt1 == "int")
+                {
+                    property1.Type = new CodeTypeReference(typeof(System.Int32));
+                }
+                else if (dt1 == "string")
+                {
+                    property1.Type = new CodeTypeReference(typeof(System.String));
+                }
+
+                targetClass.Members.Add(property1);
+
+                CodeMemberField field2 = new CodeMemberField();
+                field2.Attributes = MemberAttributes.Private;
+                if (dt2 == "int")
+                {
+                    field2.Type = new CodeTypeReference(typeof(System.Int32));
+                }
+                else if (dt2 == "string")
+                {
+                    field2.Type = new CodeTypeReference(typeof(System.String));
+                }
+                field2.Name = "_" + fld2;
+                targetClass.Members.Add(field2);
+
+                CodeMemberProperty property2 = new CodeMemberProperty();
+                property2.GetStatements.Add(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + fld2)));
+                property2.SetStatements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + fld2), new CodePropertySetValueReferenceExpression()));
+                property2.Attributes = MemberAttributes.Public;
+                property2.Name = fld2;
+                if (dt2 == "int")
+                {
+                    property2.Type = new CodeTypeReference(typeof(System.Int32));
+                }
+                else if (dt2 == "string")
+                {
+                    property2.Type = new CodeTypeReference(typeof(System.String));
+                }
+
+                targetClass.Members.Add(property2);
+            }
+
+            public void RelationalAddFields(string tableName, string fld1, string dt1, string fld2, string dt2, string parent)
             {
-                Attributes = MemberAttributes.Public,
-                Name = "Name",
-                Type = new CodeTypeReference(typeof(String))
-            };
+                CodeMemberField field1 = new CodeMemberField();
+                field1.Attributes = MemberAttributes.Private;
+                if (dt1 == "int")
+                {
+                    field1.Type = new CodeTypeReference(typeof(System.Int32));
+                }
+                else if (dt1 == "string")
+                {
+                    field1.Type = new CodeTypeReference(typeof(System.String));
+                }
 
-            //Name.Comments.Add(new CodeCommentStatement(
-            //     "Name is string"));
-            _targetClass.Members.Add(name);
-        }
+                field1.Name = "_" + fld1;
+                targetClass.Members.Add(field1);
+
+                CodeMemberProperty property1 = new CodeMemberProperty();
+                property1.GetStatements.Add(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + fld1)));
+                property1.SetStatements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + fld1), new CodePropertySetValueReferenceExpression()));
+                property1.Attributes = MemberAttributes.Public;
+                property1.Name = fld1;
+                if (dt1 == "int")
+                {
+                    property1.Type = new CodeTypeReference(typeof(System.Int32));
+                }
+                else if (dt1 == "string")
+                {
+                    property1.Type = new CodeTypeReference(typeof(System.String));
+                }
+
+                targetClass.Members.Add(property1);
+
+                CodeMemberField field2 = new CodeMemberField();
+                field2.Attributes = MemberAttributes.Private;
+                if (dt2 == "int")
+                {
+                    field2.Type = new CodeTypeReference(typeof(System.Int32));
+                }
+                else if (dt2 == "string")
+                {
+                    field2.Type = new CodeTypeReference(typeof(System.String));
+                }
+                field2.Name = "_" + fld2;
+                targetClass.Members.Add(field2);
+
+                CodeMemberProperty property2 = new CodeMemberProperty();
+                property2.GetStatements.Add(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + fld2)));
+                property2.SetStatements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + fld2), new CodePropertySetValueReferenceExpression()));
+                property2.Attributes = MemberAttributes.Public;
+                property2.Name = fld2;
+                if (dt2 == "int")
+                {
+                    property2.Type = new CodeTypeReference(typeof(System.Int32));
+                }
+                else if (dt2 == "string")
+                {
+                    property2.Type = new CodeTypeReference(typeof(System.String));
+                }
+
+                targetClass.Members.Add(property2);
+
+                CodeMemberField field3 = new CodeMemberField();
+                field3.Attributes = MemberAttributes.Private;
+
+                // field3.Type = new CodeTypeReference(typeof(System.Int32));
+                Type myType = Type.GetType("BlogIT.Dal.Entities." + parent);
+                //dynamic instance = Activator.CreateInstance(myType);
+
+                field3.Type = new CodeTypeReference(myType);
+
+                field3.Name = "_" + parent + tableName;
+                targetClass.Members.Add(field3);
+
+                CodeMemberProperty property3 = new CodeMemberProperty();
+                property3.GetStatements.Add(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + parent + tableName)));
+                property3.SetStatements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "_" + parent + tableName), new CodePropertySetValueReferenceExpression()));
+                property3.Attributes = MemberAttributes.Public;
+                property3.Name = parent + tableName;
+                Type myType2 = Type.GetType("BlogIT.Dal.Entities." + parent);
+                // dynamic instance2 = Activator.CreateInstance(myType2);
+                property3.Type = new CodeTypeReference(myType2);
+
+                targetClass.Members.Add(property3);
+            }
+
+            CodeDomProvider provider;
+            public void GenerateCSharpCode(string fileName)
+            {
+
+                provider = CodeDomProvider.CreateProvider("CSharp");
+                CodeGeneratorOptions options = new CodeGeneratorOptions();
+                options.BracingStyle = "C";
+
+                using (StreamWriter sourceWriter = new StreamWriter(fileName))
+                {
+                    provider.GenerateCodeFromCompileUnit(
+                        targetUnit, sourceWriter, options);
+                }
+            }
+        
     }
 }
