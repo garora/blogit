@@ -19,7 +19,7 @@ using System.Diagnostics;
 
 namespace BlogIT.Dal
 {
-    internal class GenerateTable
+    public class GenerateTable
     {
         
             CodeCompileUnit targetUnit;
