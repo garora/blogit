@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System;
-using BlogIT.Dal.Entities;
+using BlogIT.Web.Entities;
 using Microsoft.Build;
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
@@ -13,9 +13,9 @@ using NHibernate.Linq;
 using NHibernate;
 using System.Collections;
 
-
 namespace BlogIT.Web.Controllers
 {
+   
     public class GenerateDBController : Controller
     {
 
@@ -72,22 +72,21 @@ namespace BlogIT.Web.Controllers
                 if (Parent == null) //=> No Relation
                 {
                     var projectCollection = ProjectCollection.GlobalProjectCollection;
-                    string projPath = "~/blogit.csproj";
+                    string projPath = "~/BlogIT.Web.csproj";
 
                     var p = projectCollection.LoadProject(Server.MapPath(projPath));
 
 
-                    string projItem1 = "~/BlogIT.Dal/Entities/" + tableName + ".cs";
-
-                    BlogIT.Dal.GenerateTable genTable = new BlogIT.Dal.GenerateTable(tableName);
+                    string projItem1 = "~/Entities/" + tableName + ".cs";
+                    GenerateTable genTable = new GenerateTable(tableName);
                     genTable.AddFields(fieldName1, dataType1, fieldName2, dataType2);
                     genTable.GenerateCSharpCode(Server.MapPath(projItem1));
 
                     p.AddItem("Compile", Server.MapPath(projItem1));
                     p.Save();
 
-                    string projItem2 = "~/BlogIT.Dal/Mapping/" + tableName + "Map.cs";
-                    BlogIT.Dal.GenerateMap genMap = new BlogIT.Dal.GenerateMap(tableName);
+                    string projItem2 = "~/Mapping/" + tableName + "Map.cs";
+                    GenerateMap genMap = new GenerateMap(tableName);
                     genMap.AddConstructor(fieldName1, fieldName2, tableName);
                     genMap.GenerateCSharpCode(Server.MapPath(projItem2));
 
@@ -103,27 +102,26 @@ namespace BlogIT.Web.Controllers
                 else if (Parent != null)//=> Relation To Parent
                 {
                     var projectCollection = ProjectCollection.GlobalProjectCollection;
-                    string projPath = "~/blogit.csproj";
+                    string projPath = "~/MVCNHibernate.csproj";
 
                     var p = projectCollection.LoadProject(Server.MapPath(projPath));
 
 
-                    string fileNameEn = "~/BlogIT.Dal/Entities/" + tableName + ".cs";
-
-                    BlogIT.Dal.GenerateTable genTable = new BlogIT.Dal.GenerateTable(tableName);
+                    string fileNameEn = "~/Entities/" + tableName + ".cs";
+                    GenerateTable genTable = new GenerateTable(tableName);
                     genTable.RelationalAddFields(tableName, fieldName1, dataType1, fieldName2, dataType2, Parent);
                     genTable.GenerateCSharpCode(Server.MapPath(fileNameEn));
 
-                    string projItem1 = "~/BlogIT.Dal/Entities/" + tableName + ".cs";
+                    string projItem1 = "~/Entities/" + tableName + ".cs";
                     p.AddItem("Compile", Server.MapPath(projItem1));
                     p.Save();
 
-                    string fileNameMap = "~/BlogIT.Dal/Mapping/" + tableName + "Map.cs";
-                    BlogIT.Dal.GenerateMap genMap = new BlogIT.Dal.GenerateMap(tableName);
+                    string fileNameMap = "~/Mapping/" + tableName + "Map.cs";
+                    GenerateMap genMap = new GenerateMap(tableName);
                     genMap.RelationalAddConstructor(fieldName1, fieldName2, tableName, Parent);
                     genMap.GenerateCSharpCode(Server.MapPath(fileNameMap));
 
-                    string projItem2 = "~/BlogIT.Dal/Mapping/" + tableName + "Map.cs";
+                    string projItem2 = "~/Mapping/" + tableName + "Map.cs";
                     p.AddItem("Compile", Server.MapPath(projItem2));
                     p.Save();
                     //ProjectCollection.GlobalProjectCollection.UnloadProject(p);
