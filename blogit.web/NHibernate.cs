@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
-using BlogIT.Dal.Entities;     //ProjectName.Entites
+using BlogIT.Web.Entities;     //ProjectName.Entites
 using BlogIT.Web.Controllers; //ProjectName.Controllers
-
 namespace BlogIT.Web
 {
     public class NHibernate
@@ -33,7 +28,7 @@ namespace BlogIT.Web
             _sessionFactory = Fluently.Configure()
             .Database(MsSqlConfiguration.MsSql2008
                           .ConnectionString(
-                              @"Server=.;initial catalog=BlogIT;integrated security=True")
+                              @"Server=.;initial catalog=GenerateDB;integrated security=True")
                           .ShowSql()
             )
             .Mappings(m =>
